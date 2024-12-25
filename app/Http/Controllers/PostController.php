@@ -34,15 +34,17 @@ class PostController extends Controller
         ]);
     
         Post::create($validated);
-        return redirect('/');
+        return redirect('/')->with(
+            'success','the post was created'
+        );
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Post $psost)
+    public function show(Post $post)
     {
-        //
+        return inertia('Show',['post' => $post]);
     }
 
     /**
@@ -50,7 +52,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return inertia('Edit',['post' => $post]);
     }
 
     /**
@@ -58,7 +60,15 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $validated = $request->validate([
+            'body' => ['required'],
+        ]);
+    
+        $post->update($validated);
+        return redirect('/')->with(
+            'success','the post was updated'
+        );
+
     }
 
     /**
@@ -66,6 +76,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect('/')->with(
+            'message','the post was deleted'
+        );
     }
 }

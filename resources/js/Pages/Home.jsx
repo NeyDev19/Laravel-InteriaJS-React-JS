@@ -1,10 +1,22 @@
 import React from 'react'
 import { Link } from '@inertiajs/react'
+import { usePage } from '@inertiajs/react'
+import { useState } from 'react'
+import { Head } from '@inertiajs/react'
 const Home = ({ posts }) => {
-  console.log(posts);
+  const { flash } = usePage().props
+  const [flashMsg, setflashmsg] = useState([flash.message,flash.success])
+  setTimeout(() => {
+    setflashmsg(null)
+  },2000)
 
   return (
-      <div className='flex flex-col items-center'>
+    <div className='flex flex-col items-center'>
+    <Head title="Home" />
+
+      {flashMsg && flash.message && <div className='absolute top-24 right-6 bg-rose-500 p-2 rounded shadow-lg text-sm text-white'>{flash.message}</div>}
+      {flashMsg && flash.success && <div className='absolute top-24 right-6 bg-green-500 p-2 rounded shadow-lg text-sm text-white'>{flash.success}</div>}
+
       <div className='pt-8'>
         {posts.data.map(post => (
 
@@ -14,6 +26,7 @@ const Home = ({ posts }) => {
               <span>{ new Date(post.created_at).toLocaleTimeString()}</span>
             </div>
             <p className='font-medium'>{post.body}</p>
+            <Link href={`posts/${post.id}`} className="mt-5 text-sm text-blue-600">Read More...</Link>
           </div>
           
         ))}

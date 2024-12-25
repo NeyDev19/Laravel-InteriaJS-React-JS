@@ -1,5 +1,7 @@
 import React from 'react'
 import { useForm } from '@inertiajs/react'
+import { Head } from '@inertiajs/react'
+
 
 
 const create = () => {
@@ -13,7 +15,9 @@ const create = () => {
       
       
     return (
-      <div>
+        <div>
+                <Head title="Create" />
+
       <div className='title'>Create a Post</div>
       <div>
               <form onSubmit={submit} className='w-1/2 mx-auto'>
